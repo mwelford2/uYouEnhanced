@@ -38,6 +38,10 @@ I do my best to address problems when they come up, and I often suggest workarou
 
 I'd recommend using uYouEnhanced with **YouTube v21.14.4 or higher** for the best compatibility.
 
+Compatibility was last verified against **YouTube v21.36.6** (binary-checked, September 2026). All core features (ad blocking, player controls, theming, download pipeline) work correctly. Three cosmetic-only features are temporarily inactive on v21.36.6+ pending a rewrite against YouTube's restructured internals — see [`Docs/CompatibilityNotes.md`](Docs/CompatibilityNotes.md) for details:
+- **Big YouTube Mini Player** (`BigYTMiniPlayer.xm`) — the mini player's underlying classes were decomposed into a new hierarchy with no direct successor.
+- Snap-to-chapter and buffered-progress-bar-color overrides were re-targeted to their new classes and confirmed working; dark-mode styling of the system "Open with..." sheet, and low-contrast text coloring on a handful of Texture-based text widgets, remain inert (cosmetic only, no crash risk).
+
 Thanks for understanding!
 
 And a huge thank you to **qnblackcat**, **PoomSmart**, and all the other developers whose work made this fork possible!

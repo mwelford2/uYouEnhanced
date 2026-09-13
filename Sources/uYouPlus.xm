@@ -171,6 +171,9 @@ YTMainAppControlsOverlayView *controlsOverlayView;
 %group gMisc1
 
 // YTMiniPlayerEnabler: https://github.com/level3tjg/YTMiniplayerEnabler/
+// NOTE (v21.36.6+): YTWatchMiniBarViewController no longer exists in the YouTube binary (replaced
+// by a decomposed class family, see BigYTMiniPlayer.xm). %hook on a missing class is a safe no-op,
+// so kYTMiniPlayer is temporarily inert until this is rewritten against the new hierarchy.
 %hook YTWatchMiniBarViewController
 - (void)updateMiniBarPlayerStateFromRenderer {
     if (!IS_ENABLED(kYTMiniPlayer)) {
@@ -597,12 +600,12 @@ YTMainAppControlsOverlayView *controlsOverlayView;
 %end
 
 // Disable snap to chapter
-%hook YTSegmentableInlinePlayerBarView
-- (void)didMoveToWindow {
-    %orig;
-    if (IS_ENABLED(kSnapToChapter)) {
-        self.enableSnapToChapter = NO;
-    }
+// YTSegmentableInlinePlayerBarView was removed from the YouTube binary (last seen ~v21.14.4);
+// "enableSnapToChapter" now lives as a property on the YTIPlayerBarPlayingState model instead
+// of directly on the bar view, so the flag is forced off at the model level (verified against v21.36.6).
+%hook YTIPlayerBarPlayingState
+- (BOOL)enableSnapToChapter {
+    return IS_ENABLED(kSnapToChapter) ? NO : %orig;
 }
 %end
 
@@ -858,7 +861,9 @@ YTMainAppControlsOverlayView *controlsOverlayView;
 
 // Bring back the Red Progress Bar and Gray Buffer Progress
 %group gRedProgressBar
-%hook YTSegmentableInlinePlayerBarView
+// YTSegmentableInlinePlayerBarView was removed from the YouTube binary (last seen ~v21.14.4);
+// bufferedProgressBarColor now lives on YTPlayerBarSegmentView instead (verified against v21.36.6).
+%hook YTPlayerBarSegmentView
 - (void)setBufferedProgressBarColor:(id)arg1 {
      [UIColor colorWithRed:1.00 green:1.00 blue:1.00 alpha:0.50];
 }

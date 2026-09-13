@@ -328,6 +328,10 @@ static inline BOOL isDarkMode() {
 }
 %end
 
+// NOTE (v21.36.6+): ASTextFieldNode / ASTextView / ASButtonNode no longer exist in the YouTube
+// binary (Texture/AsyncDisplayKit node classes were renamed/restructured upstream). %hook on a
+// missing class is a safe no-op, so low-contrast text coloring on these three widget types is
+// temporarily inert until the new node class names are identified and re-verified.
 %hook ASTextFieldNode
 - (void)setTextColor:(UIColor *)textColor {
     %orig(isDarkMode() ? kDefaultTextColor : textColor);
