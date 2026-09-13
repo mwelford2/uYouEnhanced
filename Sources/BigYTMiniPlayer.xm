@@ -1,5 +1,11 @@
 #import "BigYTMiniPlayer.h"
 
+// NOTE (v21.36.6+): YTWatchMiniBarView / YTWatchMiniBarViewController no longer exist in the
+// YouTube binary — the mini player was internally decomposed into a new class family
+// (YTWatchMiniBarVisibilityController, YTWatchMiniBarButtonView, YTPlaylistMiniBarView/Controller,
+// etc.) with no single drop-in successor. Logos safely no-ops %hook on a missing class, so this
+// group stays inert (no crash) rather than applying stale/guessed hooks — Big YouTube Mini Player
+// is effectively disabled until it's rewritten against the new class hierarchy.
 %group BigYTMiniPlayer // https://github.com/Galactic-Dev/BigYTMiniPlayer
 %hook YTWatchMiniBarView
 - (void)setWatchMiniPlayerLayout:(int)arg1 {

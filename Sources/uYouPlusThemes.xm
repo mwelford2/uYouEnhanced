@@ -286,6 +286,12 @@ UIColor* raisedColor = [UIColor colorWithRed:0.035 green:0.035 blue:0.035 alpha:
 %end
 
 // Open link with...
+// NOTE (v21.36.6+): ASWAppSwitchingSheetHeaderView / ASWAppSwitchingSheetFooterView /
+// ASWAppSwitcherCollectionViewCell no longer exist — Apple's system "Open with..." app-switching
+// sheet UI was restructured (now ASWAppSwitchingFloatingButton, ASWAppSwitchingGm3Options, etc.,
+// part of iOS itself rather than YouTube's own code). %hook on a missing class is a safe no-op, so
+// dark-mode styling of this system sheet is temporarily inert until re-verified against the new
+// class hierarchy — lower priority since it's a system sheet, not YouTube's own surface.
 %hook ASWAppSwitchingSheetHeaderView
 - (void)setBackgroundColor:(UIColor *)color {
     if (IS_DARK_APPEARANCE_ENABLED) {
@@ -599,6 +605,12 @@ UIColor *customHexColor;
 %end
 
 // Open link with...
+// NOTE (v21.36.6+): ASWAppSwitchingSheetHeaderView / ASWAppSwitchingSheetFooterView /
+// ASWAppSwitcherCollectionViewCell no longer exist — Apple's system "Open with..." app-switching
+// sheet UI was restructured (now ASWAppSwitchingFloatingButton, ASWAppSwitchingGm3Options, etc.,
+// part of iOS itself rather than YouTube's own code). %hook on a missing class is a safe no-op, so
+// dark-mode styling of this system sheet is temporarily inert until re-verified against the new
+// class hierarchy — lower priority since it's a system sheet, not YouTube's own surface.
 %hook ASWAppSwitchingSheetHeaderView
 - (void)setBackgroundColor:(UIColor *)color {
     if (IS_DARK_APPEARANCE_ENABLED) {
